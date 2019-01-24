@@ -1,0 +1,10 @@
+{
+  "token": "<Your Discord token>",
+  "bot": {
+    "plugins": [
+      "plugins.dicer",
+      "plugins.references",
+      "plugins.coffee"
+    ]
+  }
+}
