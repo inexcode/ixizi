@@ -4,7 +4,8 @@
     "plugins": [
       "plugins.dicer",
       "plugins.references",
-      "plugins.coffee"
+      "plugins.coffee",
+      "plugins.ytconvert"
     ]
   }
 }
