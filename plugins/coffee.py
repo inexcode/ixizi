@@ -74,36 +74,55 @@ class Teas(Enum):
         self.id = id
         self.title = title
 
+class Toppings(Enum):
+    topping1 = (1, "Шоколадный топпинг")
+    topping2 = (2, "Топпинг солёная карамель")
+    topping3 = (3, "Ореховый топпинг")
+    topping4 = (4, "Топпинг ягодное печенье")
+    topping5 = (5, "Топпинг бельгийская вафля")
+    topping6 = (6, "Карамельный топпинг")
+    topping7 = (7, "Маршмеллоу")
+    topping8 = (8, "")
+    topping9 = (9, "")
+
+    def __init__(self, id, title):
+        self.id = id
+        self.title = title
+
 
 class CoffeePlugin(Plugin):
     @Plugin.command('coffee', '[param:str]')
     def on_coffee(self, event, param=''):
         try:
             result = ""
-            if param.lower() == 'classic':
-                result1, expl1 = rolldice.roll_dice('1d12')
-            elif param.lower() == 'raf':
-                result1, expl1 = (5, 'User')
+            if param.lower() == 'topping':
+                result1, expl1 = rolldice.roll_dice('1d7')
+                result += list(Toppings)[result1 - 1].title
             else:
-                result1, expl1 = rolldice.roll_dice('1d23')
-            result += list(Drinks)[result1-1].title
-            if result1 == 5:
-                result2, expl2 = rolldice.roll_dice('1d18')
-                if result2 > 16:
-                    result2, expl2 = rolldice.roll_dice('1d15')
-                    result21, expl21 = rolldice.roll_dice('1d15')
-                    result += "\n**Сиропы**: {} и {}".format(list(Syrops)[result2 - 1].title, list(Syrops)[result21 - 1].title)
+                if param.lower() == 'classic':
+                    result1, expl1 = rolldice.roll_dice('1d12')
+                elif param.lower() == 'raf':
+                    result1, expl1 = (5, 'User')
                 else:
-                    result += "\n**Сироп**: {}".format(list(Syrops)[result2 - 1].title)
-            elif result1 == 9:
-                result2, expl2 = rolldice.roll_dice('1d2')
-                if result2 == 1:
-                    result += "\nТёмный"
-                else:
-                    result += "\nМолочный"
-            elif result1 == 12 or result1 == 19:
-                result2, expl2 = rolldice.roll_dice('1d3')
-                result += " {}".format(list(Teas)[result2 - 1].title)
+                    result1, expl1 = rolldice.roll_dice('1d23')
+                result += list(Drinks)[result1-1].title
+                if result1 == 5:
+                    result2, expl2 = rolldice.roll_dice('1d22')
+                    if result2 > 19:
+                        result2, expl2 = rolldice.roll_dice('1d19')
+                        result21, expl21 = rolldice.roll_dice('1d19')
+                        result += "\n**Сиропы**: {} и {}".format(list(Syrops)[result2 - 1].title, list(Syrops)[result21 - 1].title)
+                    else:
+                        result += "\n**Сироп**: {}".format(list(Syrops)[result2 - 1].title)
+                elif result1 == 9:
+                    result2, expl2 = rolldice.roll_dice('1d2')
+                    if result2 == 1:
+                        result += "\nТёмный"
+                    else:
+                        result += "\nМолочный"
+                elif result1 == 12 or result1 == 19:
+                    result2, expl2 = rolldice.roll_dice('1d3')
+                    result += " {}".format(list(Teas)[result2 - 1].title)
         except Exception as e:
             event.msg.reply(str(e))
         else:
