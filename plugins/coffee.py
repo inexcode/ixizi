@@ -95,7 +95,9 @@ class CoffeePlugin(Plugin):
     def on_coffee(self, event, param=''):
         try:
             result = ""
-            if param.lower() == 'topping':
+            if param.lower() == 'nescafe':
+                result += get_nescafe()
+            elif param.lower() == 'topping':
                 result1, expl1 = rolldice.roll_dice('1d7')
                 result += list(Toppings)[result1 - 1].title
             else:
@@ -127,3 +129,41 @@ class CoffeePlugin(Plugin):
             event.msg.reply(str(e))
         else:
             event.msg.reply(result)
+
+
+# Nescafe для RareScrap
+
+def get_nescafe():
+    result = ""
+    result1, expl1 = rolldice.roll_dice('1d4')
+    if result1 == 1:
+        result += "**NESCAFÉ 3 в 1 Классический**"
+    elif result1 == 2:
+        result += "**NESCAFÉ 3 в 1 Крепкий**"
+    elif result1 == 3:
+        result += "**NESCAFÉ 3 в 1 Мягкий**"
+    else:
+        result += "**NESCAFÉ 3 в 1 Карамельный**"
+    result1, expl1 = rolldice.roll_dice('1d5')
+    if result1 == 1:
+        result += "\nВ ледяной воде."
+    elif result1 == 2:
+        result += "\nВ прохладной воде."
+    elif result1 == 3:
+        result += "\nВ тёплой воде."
+    elif result1 == 4:
+        result += "\nВ горячей воде."
+    else:
+        result += "\nВ кипятке."
+    result1, expl1 = rolldice.roll_dice('1d4')
+    if result1 == 1:
+        result += "\nНифига не растворилось."
+    elif result1 == 2:
+        result += "\nПлохо растворилось."
+    elif result1 == 3:
+        result += "\nХорошо растворилось."
+    elif result1 == 4:
+        result += "\nИдеально растворилось."
+    if rolldice.roll_dice('1d10')[0] < 3:
+        result += "\nС плевком в стакан."
+    return result
